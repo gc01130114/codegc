@@ -38,7 +38,8 @@ async function fetchData() {
 		const response = await axios.request(options);
 		return response.data;
 	} catch (error) {
-		console.error(error);
+		console.error("Judge0 submitBatch error:", error.response?.data || error.message);
+		throw new Error("Judge0 service is unavailable: " + (error.response?.data?.message || error.message));
 	}
 }
 
@@ -76,7 +77,8 @@ async function fetchData() {
 		const response = await axios.request(options);
 		return response.data;
 	} catch (error) {
-		console.error(error);
+		console.error("Judge0 submitToken error:", error.response?.data || error.message);
+		throw new Error("Judge0 service is unavailable: " + (error.response?.data?.message || error.message));
 	}
 }
 

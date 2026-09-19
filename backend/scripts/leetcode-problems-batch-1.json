@@ -1,0 +1,882 @@
+[
+  {
+    "title": "Two Sum",
+    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target. Line 1: the array as space-separated integers. Line 2: the target. Print the two indices in increasing order, space-separated. Exactly one valid answer exists.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "2 7 11 15\n9",
+        "output": "0 1",
+        "explanation": "nums[0] + nums[1] = 2 + 7 = 9, so the answer is 0 1"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "3 2 4\n6",
+        "output": "1 2"
+      },
+      {
+        "input": "3 3\n6",
+        "output": "0 1"
+      },
+      {
+        "input": "-1 -2 -3 -4 -5\n-8",
+        "output": "2 4"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n    int target;\n    cin >> target;\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n        int target = Integer.parseInt(br.readLine().trim());\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n    const target = parseInt((lines[1] || '').trim(), 10);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n    int target;\n    cin >> target;\n\n    unordered_map<int,int> seen;\n    for(int i = 0; i < (int)nums.size(); i++){\n        int need = target - nums[i];\n        if(seen.count(need)){\n            cout << seen[need] << \" \" << i << \"\\n\";\n            return 0;\n        }\n        seen[nums[i]] = i;\n    }\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n        int target = Integer.parseInt(br.readLine().trim());\n\n        Map<Integer,Integer> seen = new HashMap<>();\n        for (int i = 0; i < nums.length; i++) {\n            int need = target - nums[i];\n            if (seen.containsKey(need)) {\n                System.out.println(seen.get(need) + \" \" + i);\n                return;\n            }\n            seen.put(nums[i], i);\n        }\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n    const target = parseInt((lines[1] || '').trim(), 10);\n\n    const seen = new Map();\n    for (let i = 0; i < nums.length; i++) {\n        const need = target - nums[i];\n        if (seen.has(need)) {\n            console.log(seen.get(need) + ' ' + i);\n            return;\n        }\n        seen.set(nums[i], i);\n    }\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Best Time to Buy and Sell Stock",
+    "description": "You are given an array prices where prices[i] is the price of a stock on day i. You may choose one day to buy and a later day to sell. Print the maximum profit achievable, or 0 if no profit is possible. Input: a single line of space-separated integers.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "7 1 5 3 6 4",
+        "output": "5",
+        "explanation": "Buy on day 1 at price 1 and sell on day 4 at price 6, profit = 5"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "7 6 4 3 1",
+        "output": "0"
+      },
+      {
+        "input": "1 2",
+        "output": "1"
+      },
+      {
+        "input": "2 4 1 7",
+        "output": "6"
+      },
+      {
+        "input": "5",
+        "output": "0"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    long long best = 0;\n    long long mn = LLONG_MAX;\n    for(int p : nums){\n        mn = min(mn, (long long)p);\n        best = max(best, (long long)p - mn);\n    }\n    cout << best << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        long best = 0, mn = Long.MAX_VALUE;\n        for (int p : nums) {\n            mn = Math.min(mn, p);\n            best = Math.max(best, p - mn);\n        }\n        System.out.println(best);\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    let best = 0, mn = Infinity;\n    for (const p of nums) {\n        mn = Math.min(mn, p);\n        best = Math.max(best, p - mn);\n    }\n    console.log(best);\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Contains Duplicate",
+    "description": "Given an integer array nums on a single line, print true if any value appears at least twice, and false if every element is distinct.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "1 2 3 1",
+        "output": "true",
+        "explanation": "The value 1 appears at index 0 and index 3"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1 2 3 4",
+        "output": "false"
+      },
+      {
+        "input": "1 1 1 3 3 4 3 2 4 2",
+        "output": "true"
+      },
+      {
+        "input": "7",
+        "output": "false"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    unordered_set<int> seen;\n    for(int x : nums){\n        if(seen.count(x)){\n            cout << \"true\" << \"\\n\";\n            return 0;\n        }\n        seen.insert(x);\n    }\n    cout << \"false\" << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        Set<Integer> seen = new HashSet<>();\n        for (int x : nums) {\n            if (!seen.add(x)) {\n                System.out.println(\"true\");\n                return;\n            }\n        }\n        System.out.println(\"false\");\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    const seen = new Set(nums);\n    console.log(seen.size !== nums.length ? 'true' : 'false');\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Maximum Subarray",
+    "description": "Given an integer array nums on a single line, find the contiguous subarray with the largest sum and print that sum. The array contains at least one element.",
+    "difficulty": "medium",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "-2 1 -3 4 -1 2 1 -5 4",
+        "output": "6",
+        "explanation": "The subarray 4 -1 2 1 has the largest sum, which is 6"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1",
+        "output": "1"
+      },
+      {
+        "input": "5 4 -1 7 8",
+        "output": "23"
+      },
+      {
+        "input": "-3 -2 -5",
+        "output": "-2"
+      },
+      {
+        "input": "-1",
+        "output": "-1"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    long long best = nums[0], cur = nums[0];\n    for(size_t i = 1; i < nums.size(); i++){\n        cur = max((long long)nums[i], cur + nums[i]);\n        best = max(best, cur);\n    }\n    cout << best << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        long best = nums[0], cur = nums[0];\n        for (int i = 1; i < nums.length; i++) {\n            cur = Math.max(nums[i], cur + nums[i]);\n            best = Math.max(best, cur);\n        }\n        System.out.println(best);\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    let best = nums[0], cur = nums[0];\n    for (let i = 1; i < nums.length; i++) {\n        cur = Math.max(nums[i], cur + nums[i]);\n        best = Math.max(best, cur);\n    }\n    console.log(best);\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Product of Array Except Self",
+    "description": "Given an integer array nums on a single line, print an array answer where answer[i] is the product of all elements of nums except nums[i]. Solve it without using division. Print the result as space-separated integers on one line.",
+    "difficulty": "medium",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "1 2 3 4",
+        "output": "24 12 8 6",
+        "explanation": "answer[0] = 2*3*4 = 24, answer[1] = 1*3*4 = 12, answer[2] = 1*2*4 = 8, answer[3] = 1*2*3 = 6"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "-1 1 0 -3 3",
+        "output": "0 0 9 0 0"
+      },
+      {
+        "input": "2 3",
+        "output": "3 2"
+      },
+      {
+        "input": "1 1 1 1",
+        "output": "1 1 1 1"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    int n = nums.size();\n    vector<long long> res(n, 1);\n    long long pre = 1;\n    for(int i = 0; i < n; i++){\n        res[i] = pre;\n        pre *= nums[i];\n    }\n    long long suf = 1;\n    for(int i = n - 1; i >= 0; i--){\n        res[i] *= suf;\n        suf *= nums[i];\n    }\n    for(int i = 0; i < n; i++){\n        if(i) cout << \" \";\n        cout << res[i];\n    }\n    cout << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        int n = nums.length;\n        long[] res = new long[n];\n        long pre = 1;\n        for (int i = 0; i < n; i++) {\n            res[i] = pre;\n            pre *= nums[i];\n        }\n        long suf = 1;\n        for (int i = n - 1; i >= 0; i--) {\n            res[i] *= suf;\n            suf *= nums[i];\n        }\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < n; i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(res[i]);\n        }\n        System.out.println(sb.toString());\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    const n = nums.length;\n    const res = new Array(n).fill(1);\n    let pre = 1;\n    for (let i = 0; i < n; i++) {\n        res[i] = pre;\n        pre *= nums[i];\n    }\n    let suf = 1;\n    for (let i = n - 1; i >= 0; i--) {\n        res[i] *= suf;\n        suf *= nums[i];\n    }\n    console.log(res.join(' '));\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Move Zeroes",
+    "description": "Given an integer array nums on a single line, move all zeroes to the end while keeping the relative order of the non-zero elements. Print the resulting array as space-separated integers on one line.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "0 1 0 3 12",
+        "output": "1 3 12 0 0",
+        "explanation": "The non-zero values keep their order 1, 3, 12 and the two zeroes are pushed to the end"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "0",
+        "output": "0"
+      },
+      {
+        "input": "1 2 3",
+        "output": "1 2 3"
+      },
+      {
+        "input": "0 0 1",
+        "output": "1 0 0"
+      },
+      {
+        "input": "4 0 5 0 0 6",
+        "output": "4 5 6 0 0 0"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    int write = 0;\n    for(int x : nums){\n        if(x != 0) nums[write++] = x;\n    }\n    while(write < (int)nums.size()) nums[write++] = 0;\n    for(size_t i = 0; i < nums.size(); i++){\n        if(i) cout << \" \";\n        cout << nums[i];\n    }\n    cout << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        int write = 0;\n        for (int x : nums) {\n            if (x != 0) nums[write++] = x;\n        }\n        while (write < nums.length) nums[write++] = 0;\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < nums.length; i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(nums[i]);\n        }\n        System.out.println(sb.toString());\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    let write = 0;\n    for (const x of nums) {\n        if (x !== 0) nums[write++] = x;\n    }\n    while (write < nums.length) nums[write++] = 0;\n    console.log(nums.join(' '));\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Majority Element",
+    "description": "Given an integer array nums on a single line, print the majority element, which is the element that appears more than floor(n/2) times. You may assume the majority element always exists.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "3 2 3",
+        "output": "3",
+        "explanation": "The value 3 appears 2 times out of 3, which is more than floor(3/2) = 1"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "2 2 1 1 1 2 2",
+        "output": "2"
+      },
+      {
+        "input": "1",
+        "output": "1"
+      },
+      {
+        "input": "6 6 6 7 7",
+        "output": "6"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    int cand = nums[0], cnt = 0;\n    for(int x : nums){\n        if(cnt == 0){ cand = x; cnt = 1; }\n        else if(x == cand) cnt++;\n        else cnt--;\n    }\n    cout << cand << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        int cand = nums[0], cnt = 0;\n        for (int x : nums) {\n            if (cnt == 0) { cand = x; cnt = 1; }\n            else if (x == cand) cnt++;\n            else cnt--;\n        }\n        System.out.println(cand);\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    let cand = nums[0], cnt = 0;\n    for (const x of nums) {\n        if (cnt === 0) { cand = x; cnt = 1; }\n        else if (x === cand) cnt++;\n        else cnt--;\n    }\n    console.log(cand);\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Valid Anagram",
+    "description": "Line 1 contains a string s and line 2 contains a string t, both made of lowercase English letters. Print true if t is an anagram of s, otherwise print false.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "anagram\nnagaram",
+        "output": "true",
+        "explanation": "Both strings use the same letters with the same counts"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "rat\ncar",
+        "output": "false"
+      },
+      {
+        "input": "a\nab",
+        "output": "false"
+      },
+      {
+        "input": "aacc\nccac",
+        "output": "false"
+      },
+      {
+        "input": "listen\nsilent",
+        "output": "true"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string s, t;\n    getline(cin, s);\n    getline(cin, t);\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        String t = br.readLine();\n        if (s == null) s = \"\";\n        if (t == null) t = \"\";\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const s = lines[0] === undefined ? '' : lines[0];\n    const t = lines[1] === undefined ? '' : lines[1];\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string s, t;\n    getline(cin, s);\n    getline(cin, t);\n\n    if(s.size() != t.size()){\n        cout << \"false\" << \"\\n\";\n        return 0;\n    }\n    int cnt[26] = {0};\n    for(char c : s) cnt[c - 'a']++;\n    for(char c : t) cnt[c - 'a']--;\n    for(int i = 0; i < 26; i++){\n        if(cnt[i] != 0){\n            cout << \"false\" << \"\\n\";\n            return 0;\n        }\n    }\n    cout << \"true\" << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        String t = br.readLine();\n        if (s == null) s = \"\";\n        if (t == null) t = \"\";\n\n        s = s.trim();\n        t = t.trim();\n        if (s.length() != t.length()) {\n            System.out.println(\"false\");\n            return;\n        }\n        int[] cnt = new int[26];\n        for (char c : s.toCharArray()) cnt[c - 'a']++;\n        for (char c : t.toCharArray()) cnt[c - 'a']--;\n        for (int i = 0; i < 26; i++) {\n            if (cnt[i] != 0) {\n                System.out.println(\"false\");\n                return;\n            }\n        }\n        System.out.println(\"true\");\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const s = lines[0] === undefined ? '' : lines[0];\n    const t = lines[1] === undefined ? '' : lines[1];\n\n    const a = s.trim(), b = t.trim();\n    if (a.length !== b.length) {\n        console.log('false');\n        return;\n    }\n    const cnt = new Map();\n    for (const c of a) cnt.set(c, (cnt.get(c) || 0) + 1);\n    for (const c of b) {\n        if (!cnt.has(c)) { console.log('false'); return; }\n        const v = cnt.get(c) - 1;\n        if (v === 0) cnt.delete(c); else cnt.set(c, v);\n    }\n    console.log(cnt.size === 0 ? 'true' : 'false');\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Valid Palindrome",
+    "description": "Given a string s on a single line, print true if it reads the same forward and backward after converting all uppercase letters to lowercase and removing every character that is not a letter or a digit. Otherwise print false. The string may contain spaces and punctuation.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "A man, a plan, a canal: Panama",
+        "output": "true",
+        "explanation": "After cleaning, the string becomes amanaplanacanalpanama, which is a palindrome"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "race a car",
+        "output": "false"
+      },
+      {
+        "input": "0P",
+        "output": "false"
+      },
+      {
+        "input": ".,",
+        "output": "true"
+      },
+      {
+        "input": "ab_a",
+        "output": "true"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string s;\n    getline(cin, s);\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const s = lines[0] === undefined ? '' : lines[0];\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string s;\n    getline(cin, s);\n\n    string clean;\n    for(char c : s){\n        if(isalnum((unsigned char)c)) clean += tolower((unsigned char)c);\n    }\n    int i = 0, j = (int)clean.size() - 1;\n    while(i < j){\n        if(clean[i] != clean[j]){\n            cout << \"false\" << \"\\n\";\n            return 0;\n        }\n        i++; j--;\n    }\n    cout << \"true\" << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n\n        StringBuilder clean = new StringBuilder();\n        for (char c : s.toCharArray()) {\n            if (Character.isLetterOrDigit(c)) clean.append(Character.toLowerCase(c));\n        }\n        int i = 0, j = clean.length() - 1;\n        while (i < j) {\n            if (clean.charAt(i) != clean.charAt(j)) {\n                System.out.println(\"false\");\n                return;\n            }\n            i++; j--;\n        }\n        System.out.println(\"true\");\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const s = lines[0] === undefined ? '' : lines[0];\n\n    const clean = s.toLowerCase().replace(/[^a-z0-9]/g, '');\n    let i = 0, j = clean.length - 1;\n    while (i < j) {\n        if (clean[i] !== clean[j]) {\n            console.log('false');\n            return;\n        }\n        i++; j--;\n    }\n    console.log('true');\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Longest Substring Without Repeating Characters",
+    "description": "Given a string s on a single line, print the length of the longest substring that contains no repeated characters. The string consists of printable characters without spaces.",
+    "difficulty": "medium",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "abcabcbb",
+        "output": "3",
+        "explanation": "The longest substring without repeats is abc, which has length 3"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "bbbbb",
+        "output": "1"
+      },
+      {
+        "input": "pwwkew",
+        "output": "3"
+      },
+      {
+        "input": "dvdf",
+        "output": "3"
+      },
+      {
+        "input": "abcdefg",
+        "output": "7"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string s;\n    getline(cin, s);\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const s = lines[0] === undefined ? '' : lines[0];\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    string s;\n    getline(cin, s);\n\n    vector<int> last(256, -1);\n    int best = 0, start = 0;\n    for(int i = 0; i < (int)s.size(); i++){\n        unsigned char c = s[i];\n        if(last[c] >= start) start = last[c] + 1;\n        last[c] = i;\n        best = max(best, i - start + 1);\n    }\n    cout << best << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String s = br.readLine();\n        if (s == null) s = \"\";\n\n        s = s.trim();\n        Map<Character,Integer> last = new HashMap<>();\n        int best = 0, start = 0;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            Integer prev = last.get(c);\n            if (prev != null && prev >= start) start = prev + 1;\n            last.put(c, i);\n            best = Math.max(best, i - start + 1);\n        }\n        System.out.println(best);\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const s = lines[0] === undefined ? '' : lines[0];\n\n    const str = s.trim();\n    const last = new Map();\n    let best = 0, start = 0;\n    for (let i = 0; i < str.length; i++) {\n        const c = str[i];\n        if (last.has(c) && last.get(c) >= start) start = last.get(c) + 1;\n        last.set(c, i);\n        best = Math.max(best, i - start + 1);\n    }\n    console.log(best);\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Group Anagrams",
+    "description": "A single line contains space-separated lowercase words. Group the words that are anagrams of each other. Print one group per line: the words inside a group must be sorted lexicographically and separated by single spaces, and the groups must be printed in lexicographic order of their first word.",
+    "difficulty": "medium",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "eat tea tan ate nat bat",
+        "output": "ate eat tea\nbat\nnat tan",
+        "explanation": "eat, tea and ate share the letters aet; nat and tan share ant; bat is alone. Groups are ordered by their first word"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "a",
+        "output": "a"
+      },
+      {
+        "input": "abc bca cab xyz",
+        "output": "abc bca cab\nxyz"
+      },
+      {
+        "input": "ab ba aa",
+        "output": "aa\nab ba"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<string> words;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        string w;\n        while(ss >> w) words.push_back(w);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        String[] words = line.isEmpty() ? new String[0] : line.split(\"\\\\s+\");\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const words = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<string> words;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        string w;\n        while(ss >> w) words.push_back(w);\n    }\n\n    map<string, vector<string>> groups;\n    for(auto &w : words){\n        string k = w;\n        sort(k.begin(), k.end());\n        groups[k].push_back(w);\n    }\n    vector<vector<string>> res;\n    for(auto &kv : groups){\n        vector<string> g = kv.second;\n        sort(g.begin(), g.end());\n        res.push_back(g);\n    }\n    sort(res.begin(), res.end(), [](const vector<string>& a, const vector<string>& b){\n        return a[0] < b[0];\n    });\n    for(auto &g : res){\n        for(size_t i = 0; i < g.size(); i++){\n            if(i) cout << \" \";\n            cout << g[i];\n        }\n        cout << \"\\n\";\n    }\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        String[] words = line.isEmpty() ? new String[0] : line.split(\"\\\\s+\");\n\n        Map<String, List<String>> groups = new HashMap<>();\n        for (String w : words) {\n            char[] arr = w.toCharArray();\n            Arrays.sort(arr);\n            String k = new String(arr);\n            groups.computeIfAbsent(k, x -> new ArrayList<>()).add(w);\n        }\n        List<List<String>> res = new ArrayList<>();\n        for (List<String> g : groups.values()) {\n            Collections.sort(g);\n            res.add(g);\n        }\n        res.sort((a, b) -> a.get(0).compareTo(b.get(0)));\n        StringBuilder sb = new StringBuilder();\n        for (List<String> g : res) sb.append(String.join(\" \", g)).append('\\n');\n        System.out.print(sb.toString());\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const words = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/);\n\n    const groups = new Map();\n    for (const w of words) {\n        const k = w.split('').sort().join('');\n        if (!groups.has(k)) groups.set(k, []);\n        groups.get(k).push(w);\n    }\n    const res = [...groups.values()].map(g => g.slice().sort());\n    res.sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));\n    console.log(res.map(g => g.join(' ')).join('\\n'));\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Top K Frequent Elements",
+    "description": "Line 1 contains an integer array nums as space-separated integers. Line 2 contains an integer k. Print the k most frequent elements, sorted in increasing order and separated by single spaces. The answer is guaranteed to be unique.",
+    "difficulty": "medium",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "1 1 1 2 2 3\n2",
+        "output": "1 2",
+        "explanation": "The value 1 appears 3 times and 2 appears twice, so the two most frequent values are 1 and 2"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1\n1",
+        "output": "1"
+      },
+      {
+        "input": "4 4 4 5 5 6\n2",
+        "output": "4 5"
+      },
+      {
+        "input": "3 0 1 0 1 1\n2",
+        "output": "0 1"
+      },
+      {
+        "input": "-1 -1 5 5 5 2\n1",
+        "output": "5"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n    int target;\n    cin >> target;\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n        int target = Integer.parseInt(br.readLine().trim());\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n    const target = parseInt((lines[1] || '').trim(), 10);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n    int target;\n    cin >> target;\n\n    int k = target;\n    unordered_map<int,int> freq;\n    for(int x : nums) freq[x]++;\n    vector<pair<int,int>> items(freq.begin(), freq.end());\n    sort(items.begin(), items.end(), [](const pair<int,int>& a, const pair<int,int>& b){\n        if(a.second != b.second) return a.second > b.second;\n        return a.first < b.first;\n    });\n    vector<int> res;\n    for(int i = 0; i < k && i < (int)items.size(); i++) res.push_back(items[i].first);\n    sort(res.begin(), res.end());\n    for(size_t i = 0; i < res.size(); i++){\n        if(i) cout << \" \";\n        cout << res[i];\n    }\n    cout << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n        int target = Integer.parseInt(br.readLine().trim());\n\n        int k = target;\n        Map<Integer,Integer> freq = new HashMap<>();\n        for (int x : nums) freq.merge(x, 1, Integer::sum);\n        List<Integer> keys = new ArrayList<>(freq.keySet());\n        keys.sort((a, b) -> {\n            int fa = freq.get(a), fb = freq.get(b);\n            if (fa != fb) return fb - fa;\n            return Integer.compare(a, b);\n        });\n        List<Integer> res = new ArrayList<>(keys.subList(0, Math.min(k, keys.size())));\n        Collections.sort(res);\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < res.size(); i++) {\n            if (i > 0) sb.append(' ');\n            sb.append(res.get(i));\n        }\n        System.out.println(sb.toString());\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n    const target = parseInt((lines[1] || '').trim(), 10);\n\n    const k = target;\n    const freq = new Map();\n    for (const x of nums) freq.set(x, (freq.get(x) || 0) + 1);\n    const keys = [...freq.keys()];\n    keys.sort((a, b) => (freq.get(b) - freq.get(a)) || (a - b));\n    const res = keys.slice(0, k).sort((a, b) => a - b);\n    console.log(res.join(' '));\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Binary Search",
+    "description": "Line 1 contains an array nums of distinct integers sorted in increasing order. Line 2 contains an integer target. Print the index of target in nums, or -1 if it is not present. Your algorithm must run in O(log n) time.",
+    "difficulty": "easy",
+    "tags": "array",
+    "visibleTestCases": [
+      {
+        "input": "-1 0 3 5 9 12\n9",
+        "output": "4",
+        "explanation": "The value 9 sits at index 4"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "-1 0 3 5 9 12\n2",
+        "output": "-1"
+      },
+      {
+        "input": "5\n5",
+        "output": "0"
+      },
+      {
+        "input": "5\n-5",
+        "output": "-1"
+      },
+      {
+        "input": "1 2 3 4 5 6 7 8\n1",
+        "output": "0"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n    int target;\n    cin >> target;\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n        int target = Integer.parseInt(br.readLine().trim());\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n    const target = parseInt((lines[1] || '').trim(), 10);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n    int target;\n    cin >> target;\n\n    int lo = 0, hi = (int)nums.size() - 1, ans = -1;\n    while(lo <= hi){\n        int mid = lo + (hi - lo) / 2;\n        if(nums[mid] == target){ ans = mid; break; }\n        if(nums[mid] < target) lo = mid + 1;\n        else hi = mid - 1;\n    }\n    cout << ans << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n        int target = Integer.parseInt(br.readLine().trim());\n\n        int lo = 0, hi = nums.length - 1, ans = -1;\n        while (lo <= hi) {\n            int mid = lo + (hi - lo) / 2;\n            if (nums[mid] == target) { ans = mid; break; }\n            if (nums[mid] < target) lo = mid + 1;\n            else hi = mid - 1;\n        }\n        System.out.println(ans);\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n    const target = parseInt((lines[1] || '').trim(), 10);\n\n    let lo = 0, hi = nums.length - 1, ans = -1;\n    while (lo <= hi) {\n        const mid = lo + ((hi - lo) >> 1);\n        if (nums[mid] === target) { ans = mid; break; }\n        if (nums[mid] < target) lo = mid + 1;\n        else hi = mid - 1;\n    }\n    console.log(ans);\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "Climbing Stairs",
+    "description": "You are climbing a staircase with n steps. Each time you may climb either 1 or 2 steps. Given the integer n on a single line, print the number of distinct ways to reach the top. 1 <= n <= 45.",
+    "difficulty": "easy",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "3",
+        "output": "3",
+        "explanation": "The three ways are 1+1+1, 1+2 and 2+1"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "1",
+        "output": "1"
+      },
+      {
+        "input": "2",
+        "output": "2"
+      },
+      {
+        "input": "10",
+        "output": "89"
+      },
+      {
+        "input": "45",
+        "output": "1836311903"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    long long n;\n    cin >> n;\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        long n = Long.parseLong(br.readLine().trim());\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const n = parseInt((lines[0] || '').trim(), 10);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    long long n;\n    cin >> n;\n\n    long long a = 1, b = 1;\n    for(long long i = 2; i <= n; i++){\n        long long c = a + b;\n        a = b;\n        b = c;\n    }\n    cout << b << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        long n = Long.parseLong(br.readLine().trim());\n\n        long a = 1, b = 1;\n        for (long i = 2; i <= n; i++) {\n            long c = a + b;\n            a = b;\n            b = c;\n        }\n        System.out.println(b);\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const n = parseInt((lines[0] || '').trim(), 10);\n\n    let a = 1, b = 1;\n    for (let i = 2; i <= n; i++) {\n        const c = a + b;\n        a = b;\n        b = c;\n    }\n    console.log(b);\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  },
+  {
+    "title": "House Robber",
+    "description": "Given an integer array nums on a single line, where nums[i] is the money in house i, print the maximum amount you can rob without robbing two adjacent houses. The array contains at least one element.",
+    "difficulty": "medium",
+    "tags": "dp",
+    "visibleTestCases": [
+      {
+        "input": "1 2 3 1",
+        "output": "4",
+        "explanation": "Rob house 0 and house 2 to get 1 + 3 = 4"
+      }
+    ],
+    "hiddenTestCases": [
+      {
+        "input": "2 7 9 3 1",
+        "output": "12"
+      },
+      {
+        "input": "5",
+        "output": "5"
+      },
+      {
+        "input": "2 1 1 2",
+        "output": "4"
+      },
+      {
+        "input": "0 0 0",
+        "output": "0"
+      }
+    ],
+    "startCode": [
+      {
+        "language": "C++",
+        "initialCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    // TODO: write your logic here\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "initialCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        // TODO: write your logic here\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "initialCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    // TODO: write your logic here\n});\n"
+      }
+    ],
+    "referenceSolution": [
+      {
+        "language": "C++",
+        "completeCode": "#include <bits/stdc++.h>\nusing namespace std;\n\nint main(){\n    vector<int> nums;\n    string line;\n    getline(cin, line);\n    {\n        stringstream ss(line);\n        int x;\n        while(ss >> x) nums.push_back(x);\n    }\n\n    long long take = 0, skip = 0;\n    for(int x : nums){\n        long long newTake = skip + x;\n        long long newSkip = max(skip, take);\n        take = newTake;\n        skip = newSkip;\n    }\n    cout << max(take, skip) << \"\\n\";\n    return 0;\n}\n"
+      },
+      {
+        "language": "Java",
+        "completeCode": "import java.util.*;\nimport java.io.*;\n\npublic class Main {\n    public static void main(String[] args) throws IOException {\n        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));\n        String line = br.readLine();\n        line = (line == null) ? \"\" : line.trim();\n        int[] nums;\n        if (line.isEmpty()) {\n            nums = new int[0];\n        } else {\n            String[] parts = line.split(\"\\\\s+\");\n            nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) nums[i] = Integer.parseInt(parts[i]);\n        }\n\n        long take = 0, skip = 0;\n        for (int x : nums) {\n            long newTake = skip + x;\n            long newSkip = Math.max(skip, take);\n            take = newTake;\n            skip = newSkip;\n        }\n        System.out.println(Math.max(take, skip));\n    }\n}\n"
+      },
+      {
+        "language": "JavaScript",
+        "completeCode": "const readline = require('readline');\nconst rl = readline.createInterface({ input: process.stdin, terminal: false });\nlet lines = [];\nrl.on('line', (l) => lines.push(l));\nrl.on('close', () => {\n    const nums = (lines[0] || '').trim() === '' ? [] : lines[0].trim().split(/\\s+/).map(Number);\n\n    let take = 0, skip = 0;\n    for (const x of nums) {\n        const newTake = skip + x;\n        const newSkip = Math.max(skip, take);\n        take = newTake;\n        skip = newSkip;\n    }\n    console.log(Math.max(take, skip));\n});\n"
+      }
+    ],
+    "problemCreator": "6a99b51309e9b30d2a478ab3"
+  }
+]

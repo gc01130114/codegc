@@ -8,10 +8,9 @@ const solveDoubt = async(req , res)=>{
 
         const {messages,title,description,testCases,startCode} = req.body;
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY });
-       
-        async function main() {
+
         const response = await ai.models.generateContent({
-        model: "gemini-1.5-flash",
+        model: "gemini-3.6-flash",
         contents: messages,
         config: {
         systemInstruction: `
@@ -83,17 +82,14 @@ You are an expert Data Structures and Algorithms (DSA) tutor specializing in hel
 Remember: Your goal is to help users learn and understand DSA concepts through the lens of the current problem, not just to provide quick answers.
 `},
     });
-     
+
     res.status(201).json({
         message:response.text
     });
-    console.log(response.text);
-    }
 
-    main();
-      
     }
     catch(err){
+        console.log("Error: "+err);
         res.status(500).json({
             message: "Internal server error"
         });
