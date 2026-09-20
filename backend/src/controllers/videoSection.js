@@ -75,15 +75,15 @@ const saveVideoMetadata = async (req, res) => {
       return res.status(400).json({ error: 'Video not found on Cloudinary' });
     }
 
-    // Check if video already exists for this problem and user
-    const existingVideo = await SolutionVideo.findOne({
-      problemId,
-      userId,
-      cloudinaryPublicId
-    });
+    // Only one video allowed per problem — replace any existing one
+    const existingVideo = await SolutionVideo.findOne({ problemId });
 
     if (existingVideo) {
-      return res.status(409).json({ error: 'Video already exists' });
+      await cloudinary.uploader.destroy(existingVideo.cloudinaryPublicId, {
+        resource_type: 'video',
+        invalidate: true
+      });
+      await existingVideo.deleteOne();
     }
 
     // const thumbnailUrl = cloudinary.url(cloudinaryResource.public_id, {
@@ -96,7 +96,10 @@ const saveVideoMetadata = async (req, res) => {
     // format: 'jpg'
     // });
 
-    const thumbnailUrl = cloudinary.image(cloudinaryResource.public_id,{resource_type: "video"})
+    const thumbnailUrl = cloudinary.url(cloudinaryResource.public_id, {
+      resource_type: 'video',
+      format: 'jpg'
+    });
 
 // https://cloudinary.com/documentation/video_effects_and_enhancements#video_thumbnails
     // Create video solution record

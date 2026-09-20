@@ -5,7 +5,8 @@ const videoSchema = new Schema({
     problemId: {
         type: Schema.Types.ObjectId,
         ref: 'problem',
-        required: true
+        required: true,
+        unique: true
     },
     userId: {
     type: Schema.Types.ObjectId,

@@ -31,27 +31,35 @@ const ProblemPage = () => {
   const { handleSubmit } = useForm();
 
  useEffect(() => {
+    let ignore = false;
+
     const fetchProblem = async () => {
       setLoading(true);
       try {
-        
+
         const response = await axiosClient.get(`/problem/problemById/${problemId}`);
-       
-        
+
+        if (ignore) return;
+
         const initialCode = response.data.startCode.find(sc => sc.language === langMap[selectedLanguage]).initialCode;
 
         setProblem(response.data);
-        
+
         setCode(initialCode);
         setLoading(false);
-        
+
       } catch (error) {
+        if (ignore) return;
         console.error('Error fetching problem:', error);
         setLoading(false);
       }
     };
 
     fetchProblem();
+
+    return () => {
+      ignore = true;
+    };
   }, [problemId]);
 
   // Update code when language changes

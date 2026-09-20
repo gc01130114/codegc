@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+app.set('etag', false);
 require('dotenv').config();
 const main =  require('./config/db')
 const cookieParser =  require('cookie-parser');
@@ -11,10 +12,19 @@ const aiRouter = require("./routes/aiChatting")
 const videoRouter = require("./routes/videoCreator");
 const cors = require('cors')
 
+// Safety net: log and survive instead of crashing the whole server on an
+// unexpected error (e.g. a dropped connection or a missed edge case).
+process.on('unhandledRejection', (reason) => {
+    console.error('Unhandled Rejection:', reason);
+});
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
+
 // console.log("Hello")
 
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (process.env.CLIENT_URL || 'http://localhost:5173').trim(),
     credentials: true
 }))
 
