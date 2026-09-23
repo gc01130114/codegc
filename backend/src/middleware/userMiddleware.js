@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const redisClient = require("../config/redis")
 
@@ -12,9 +12,14 @@ const userMiddleware = async (req,res,next)=>{
 
         const payload = jwt.verify(token,process.env.JWT_KEY);
 
+        const IsBlocked = await redisClient.exists(`token:${token}`);
+
+        if(IsBlocked)
+            throw new Error("Invalid Token");
+
         const {_id} = payload;
 
-        if(!_id){
+        if(!_id){ 
             throw new Error("Invalid token");
         }
 
@@ -26,10 +31,7 @@ const userMiddleware = async (req,res,next)=>{
 
         // Redis ke blockList mein persent toh nahi hai
 
-        const IsBlocked = await redisClient.exists(`token:${token}`);
-
-        if(IsBlocked)
-            throw new Error("Invalid Token");
+        
 
         req.result = result;
 
